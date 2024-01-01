@@ -6,16 +6,14 @@ import { selectProviders } from "@/lib/redux/features/settings/provider/selector
 import { Select } from "@/components/ui/Select";
 import { AppDispatch } from "@/lib/redux/store";
 import { setProviderByName } from "@/lib/redux/features/settings/provider/providerSlice";
-import { useEffect } from "react";
-import { fetchProvidersThunk } from "@/lib/redux/features/settings/provider/fetchProvidersThunk";
+import { useDiscoverQuery } from "@/lib/api";
 
 export default function SelectProvider({ next }: StepProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentProvider, availableProviders } = useSelector(selectProviders);
+  const { isFetching, isError, data: availableProviders } = useDiscoverQuery();
+  const { currentProvider } = useSelector(selectProviders);
 
-  useEffect(() => {
-    dispatch(fetchProvidersThunk());
-  }, []);
+  console.log(availableProviders);
 
   const onProviderChange = (provider: string) =>
     dispatch(setProviderByName(provider));
@@ -27,14 +25,16 @@ export default function SelectProvider({ next }: StepProps) {
         Select a dictionary to fetch defenitions from. This can be changed
         later.
       </Text.p>
-      {availableProviders ? (
+      {isFetching ? (
+        <div>loading providers...</div>
+      ) : isError ? (
+        <div>An error occured.</div>
+      ) : (
         <Select
           onSelectionChange={onProviderChange}
           initialItem={currentProvider!.name}
-          items={availableProviders.map((it) => it.name)}
+          items={availableProviders!.map((it) => it.name)}
         />
-      ) : (
-        <div>loading providers...</div>
       )}
       <span className="flex-1" />
       <Button onClick={next}>Finish</Button>

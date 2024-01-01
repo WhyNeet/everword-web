@@ -5,19 +5,20 @@ import SelectProvider from "./steps/SelectProvider";
 import { Header } from "../../components/Header";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { pass as passOnboarding } from "@/lib/redux/features/settings/onboarding/onboardingSlice";
 
 const steps = [Welcome, Features, SelectProvider];
 
 export default function Onboarding() {
   const navigate = useNavigate();
-
-  // const { pass } = useOnboarding();
+  const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     if (currentStep === steps.length) {
-      // pass();
+      dispatch(passOnboarding());
       navigate("/");
     }
   }, [currentStep]);

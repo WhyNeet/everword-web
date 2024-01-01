@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { fetchProvidersThunk } from "./fetchProvidersThunk";
 import { Provider } from "./types";
+import { backendApi } from "@/lib/api";
 
 export interface ProviderState {
   currentProvider: Provider | null;
@@ -33,17 +33,16 @@ export const providerSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchProvidersThunk.fulfilled, (state, action) => {
+    builder.addMatcher(
+      backendApi.endpoints.discover.matchFulfilled,
+      (state, action) => {
         state.availableProviders = action.payload;
 
         !state.currentProvider
           ? (state.currentProvider = action.payload[0])
           : null;
-      })
-      .addCase(fetchProvidersThunk.rejected, (state) => {
-        state.isError = true;
-      });
+      }
+    );
   },
 });
 
