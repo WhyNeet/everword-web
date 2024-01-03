@@ -1,19 +1,7 @@
 import { type Flashcard as FlashcardType } from "@/lib/redux/features/flashcards/types";
-import { AnimatePresence, motion } from "framer-motion";
-import { Input } from "./ui/Input";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Text } from "./ui/Typography";
-
-const contentVariants = {
-  hidden: {
-    scale: 1.5,
-    opacity: 0,
-  },
-  visible: {
-    scale: 1,
-    opacity: 1,
-  },
-};
 
 export const Flashcard = ({
   card: { word, defenitions },

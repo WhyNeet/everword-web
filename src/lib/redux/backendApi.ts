@@ -13,8 +13,11 @@ export const backendApi = createApi({
       transformResponse: (response: { providers: Provider[] }) =>
         response.providers,
     }),
-    define: builder.query<Record<string, Defenition[]>, string>({
-      query: (word) => `providers/cambridge/${word}`,
+    define: builder.query<
+      Record<string, Defenition[]>,
+      { provider: string; word: string }
+    >({
+      query: ({ provider, word }) => `providers/${provider}/${word}`,
       transformResponse: (response: {
         defenitions: Record<string, Defenition[]>;
       }) => response.defenitions,

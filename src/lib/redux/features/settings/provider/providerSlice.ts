@@ -47,7 +47,7 @@ export const providerSlice = createSlice({
   },
 });
 
-export const selectProviders = (state: RootState) => state.settings.provider;
+export const select = (state: RootState) => state.settings.provider;
 
 export const { setProvider, setProviderByName } = providerSlice.actions;
 

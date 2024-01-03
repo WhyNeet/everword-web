@@ -1,7 +1,6 @@
 import { Header } from "@/components/Header";
 import { useNavigate } from "react-router-dom";
 import { Text } from "@/components/ui/Typography";
-import { Button } from "@/components/ui/Button";
 import { CreateSetDialog } from "./CreateSetDialog";
 import { useDispatch, useSelector } from "react-redux";
 import {

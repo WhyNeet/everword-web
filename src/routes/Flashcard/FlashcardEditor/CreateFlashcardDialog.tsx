@@ -6,10 +6,11 @@ import { Text } from "@/components/ui/Typography";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 import { useLazyAutocompleteQuery } from "@/lib/redux/autocompleteApi";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFlashcard as createFlashcard } from "@/lib/redux/features/flashcards/sets/setsSlice";
 import { useLazyDefineQuery } from "@/lib/redux/backendApi";
 import { Switch } from "@/components/ui/Switch";
+import { select as selectProviders } from "@/lib/redux/features/settings/provider/providerSlice";
 
 export const CreateFlashcardDialog = ({ setId }: { setId: string }) => {
   const [isCreating, setIsCreating] = useState(false);
@@ -23,6 +24,8 @@ export const CreateFlashcardDialog = ({ setId }: { setId: string }) => {
 
   const [triggerDefine, { isFetching: isFetchingDefenitions }] =
     useLazyDefineQuery();
+
+  const { currentProvider } = useSelector(selectProviders);
 
   const debouncedWord = useDebounce(word, 100);
 
@@ -44,7 +47,10 @@ export const CreateFlashcardDialog = ({ setId }: { setId: string }) => {
       );
 
     setIsCreating(true);
-    const { data, isError } = await triggerDefine(word.trim());
+    const { data, isError } = await triggerDefine({
+      provider: currentProvider?.id ?? "cambridge",
+      word: word.trim(),
+    });
 
     if (isError) return;
 

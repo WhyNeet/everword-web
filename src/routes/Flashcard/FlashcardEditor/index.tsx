@@ -68,7 +68,10 @@ export default function FlashcardEditor() {
           <Button
             variant="secondary"
             disabled={!set.flashcards.length}
-            onClick={() => removeCard(currentIdx)}
+            onClick={() => {
+              removeCard(currentIdx);
+              setCurrentIdx((prev) => Math.max(0, prev - 1));
+            }}
           >
             <span className="icon scale-125">remove</span>
           </Button>

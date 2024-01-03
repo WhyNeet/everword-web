@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Text } from "@/components/ui/Typography";
 import { StepFrame, StepProps } from "./common";
 import { useSelector, useDispatch } from "react-redux";
-import { selectProviders } from "@/lib/redux/features/settings/provider/providerSlice";
+import { select as selectProviders } from "@/lib/redux/features/settings/provider/providerSlice";
 import { Select } from "@/components/ui/Select";
 import { AppDispatch } from "@/lib/redux/store";
 import { setProviderByName } from "@/lib/redux/features/settings/provider/providerSlice";
