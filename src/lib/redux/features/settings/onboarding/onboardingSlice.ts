@@ -21,4 +21,4 @@ export const onboardingSlice = createSlice({
 
 export const { pass } = onboardingSlice.actions;
 
-export const selector = (state: RootState) => state.settings.onboarding;
+export const select = (state: RootState) => state.settings.onboarding;
