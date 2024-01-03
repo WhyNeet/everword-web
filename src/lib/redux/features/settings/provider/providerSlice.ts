@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { Provider } from "./types";
-import { backendApi } from "@/lib/api";
+import { backendApi } from "@/lib/redux/backendApi";
+import type { RootState } from "@/lib/redux/store";
 
 export interface ProviderState {
   currentProvider: Provider | null;
@@ -45,6 +46,8 @@ export const providerSlice = createSlice({
     );
   },
 });
+
+export const selectProviders = (state: RootState) => state.settings.provider;
 
 export const { setProvider, setProviderByName } = providerSlice.actions;
 

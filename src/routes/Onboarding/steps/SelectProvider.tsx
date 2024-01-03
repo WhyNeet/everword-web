@@ -2,18 +2,16 @@ import { Button } from "@/components/ui/Button";
 import { Text } from "@/components/ui/Typography";
 import { StepFrame, StepProps } from "./common";
 import { useSelector, useDispatch } from "react-redux";
-import { selectProviders } from "@/lib/redux/features/settings/provider/selector";
+import { selectProviders } from "@/lib/redux/features/settings/provider/providerSlice";
 import { Select } from "@/components/ui/Select";
 import { AppDispatch } from "@/lib/redux/store";
 import { setProviderByName } from "@/lib/redux/features/settings/provider/providerSlice";
-import { useDiscoverQuery } from "@/lib/api";
+import { useDiscoverQuery } from "@/lib/redux/backendApi";
 
 export default function SelectProvider({ next }: StepProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { isFetching, isError, data: availableProviders } = useDiscoverQuery();
   const { currentProvider } = useSelector(selectProviders);
-
-  console.log(availableProviders);
 
   const onProviderChange = (provider: string) =>
     dispatch(setProviderByName(provider));

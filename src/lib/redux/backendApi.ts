@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { Provider } from "./redux/features/settings/provider/types";
+import type { Provider } from "./features/settings/provider/types";
+import { Defenition } from "./features/flashcards/types";
 
 export const backendApi = createApi({
   reducerPath: "api",
@@ -12,7 +13,13 @@ export const backendApi = createApi({
       transformResponse: (response: { providers: Provider[] }) =>
         response.providers,
     }),
+    define: builder.query<Record<string, Defenition[]>, string>({
+      query: (word) => `providers/cambridge/${word}`,
+      transformResponse: (response: {
+        defenitions: Record<string, Defenition[]>;
+      }) => response.defenitions,
+    }),
   }),
 });
 
-export const { useDiscoverQuery } = backendApi;
+export const { useDiscoverQuery, useLazyDefineQuery } = backendApi;
